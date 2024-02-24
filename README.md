@@ -696,10 +696,10 @@ int ebtn_is_in_process(void);
 make all
 ```
 
-而后运行执行`make run`即可运行例程，例程中实现了2个Task的消息管理，并实现了Task Save的相关逻辑。
+而后运行执行`make run`即可运行例程，例程默认运行测试例程，覆盖绝大多数场景，从结果上看测试通过。
 
 ```shell
-PS D:\workspace\github\bare_task_msg> make run
+PS D:\workspace\github\easy_button> make run
 Building   : "output/main.exe"
 Start Build Image.
 objcopy -v -O binary output/main.exe output/main.bin
@@ -707,35 +707,150 @@ copy from `output/main.exe' [pei-i386] to `output/main.bin' [binary]
 objdump --source --all-headers --demangle --line-numbers --wide output/main.exe > output/main.lst
 Print Size
    text    data     bss     dec     hex filename
-  41452    7040    2644   51136    c7c0 output/main.exe
+  49616    6572    2644   58832    e5d0 output/main.exe
 ./output/main.exe
-Heap Remain Size: 0xff8
-Task Start Work!
-user_task1(), id: 0x1, len: 0
-BARE_TASK_HDL_SAVED
-user_task2(), id: 0x8, len: 0
-user_task2(), id: 0x9, len: 0
-user_task2(), id: 0x50, len: 20
-0x0:0x1:0x2:0x3:0x4:0x5:0x6:0x7:0x8:0x9:0xa:0xb:0xc:0xd:0xe:0xf:0x10:0x11:0x12:0x13:
-BARE_TASK_HDL_SAVED
-user_task1(), id: 0x1, len: 0
-user_task1(), id: 0x2, len: 0
-user_task1(), id: 0x10, len: 10
-0x0:0x1:0x2:0x3:0x4:0x5:0x6:0x7:0x8:0x9:
-user_task1(), id: 0x11, len: 10
-0x10:0x11:0x12:0x13:0x14:0x15:0x16:0x17:0x18:0x19:
-user_task2(), id: 0x50, len: 20
-0x0:0x1:0x2:0x3:0x4:0x5:0x6:0x7:0x8:0x9:0xa:0xb:0xc:0xd:0xe:0xf:0x10:0x11:0x12:0x13:
-user_task2(), id: 0x51, len: 20
-0x10:0x11:0x12:0x13:0x14:0x15:0x16:0x17:0x18:0x19:0x1a:0x1b:0x1c:0x1d:0x1e:0x1f:0x20:0x21:0x22:0x23:
-user_task2(), id: 0x51, len: 100
-0x50:0x51:0x52:0x53:0x54:0x55:0x56:0x57:0x58:0x59:0x5a:0x5b:0x5c:0x5d:0x5e:0x5f:0x60:0x61:0x62:0x63:0x64:0x65:0x66:0x67:0x68:0x69:0x6a:0x6b:0x6c:0x6d:0x6e:0x6f:0x70:0x71:0x72:0x73:0x74:0x75:0x76:0x77:0x78:0x79:0x7a:0x7b:0x7c:0x7d:0x7e:0x7f:0x80:0x81:0x82:0x83:0x84:0x85:0x86:0x87:0x88:0x89:0x8a:0x8b:0x8c:0x8d:0x8e:0x8f:0x90:0x91:0x92:0x93:0x94:0x95:0x96:0x97:0x98:0x99:0x9a:0x9b:0x9c:0x9d:0x9e:0x9f:0xa0:0xa1:0xa2:0xa3:0xa4:0xa5:0xa6:0xa7:0xa8:0xa9:0xaa:0xab:0xac:0xad:0xae:0xaf:0xb0:0xb1:0xb2:0xb3:
-Task End Work!
-Heap Remain Size: 0xff8
+Test running
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    242][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_single_click ......................................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    163][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    184][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    384][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   2
+Testing test_sequence_double_click ......................................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    163][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    184][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    305][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   2
+[    326][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   2
+[    526][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   3
+Testing test_sequence_triple_click ......................................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    241][   199] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    262][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    462][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   2
+Testing test_sequence_double_click_critical_time ........................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    243][   201] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+[    243][     0] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    264][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    464][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_double_click_critical_time_over ...................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    163][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    464][   301] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+[    663][   199] ID(hex):   0, evt: KEEPALIVE, keep-alive cnt:   1, click cnt:   0
+[   1163][   500] ID(hex):   0, evt: KEEPALIVE, keep-alive cnt:   2, click cnt:   0
+[   1663][   500] ID(hex):   0, evt: KEEPALIVE, keep-alive cnt:   3, click cnt:   0
+[   1667][     4] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   3, click cnt:   0
+Testing test_sequence_click_with_keepalive ................................. pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   3, click cnt:   0
+[     32][    12] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+Testing test_sequence_click_with_short ..................................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     32][    12] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    153][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    174][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    295][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    316][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    516][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   2
+Testing test_sequence_click_with_short_with_multi .......................... pass
+[     20][    20] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     42][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    163][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    184][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    305][   121] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   2
+[    316][    11] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   2
+[    316][     0] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   2
+Testing test_sequence_multi_click_with_short ............................... pass
+[     60][    60] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[     81][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    281][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_onpress_debounce ..................................... pass
+[  65547][ 65547] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[  65568][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[  65768][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_time_overflow_onpress_debounce ....................... pass
+[  65527][ 65527] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[  65548][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[  65748][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_time_overflow_onpress ................................ pass
+[  65507][ 65507] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[  65528][    21] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[  65728][   200] ID(hex):   0, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_time_overflow_onrelease_muti ......................... pass
+[  65267][ 65267] ID(hex):   0, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[  65767][   500] ID(hex):   0, evt: KEEPALIVE, keep-alive cnt:   1, click cnt:   0
+[  65789][    22] ID(hex):   0, evt: ONRELEASE, keep-alive cnt:   1, click cnt:   0
+Testing test_sequence_time_overflow_keepalive .............................. pass
+[     20][    20] ID(hex):   1, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    164][   144] ID(hex):   1, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    364][   200] ID(hex):   1, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_onrelease_debounce ................................... pass
+[     20][    20] ID(hex):   1, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    102][    82] ID(hex):   1, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    123][    21] ID(hex):   1, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    204][    81] ID(hex):   1, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    404][   200] ID(hex):   1, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   2
+Testing test_sequence_onrelease_debounce_over .............................. pass
+[  65497][ 65497] ID(hex):   1, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[  65578][    81] ID(hex):   1, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[  65778][   200] ID(hex):   1, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_onrelease_debounce_time_overflow ..................... pass
+[     20][    20] ID(hex):   2, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    120][   100] ID(hex):   2, evt: KEEPALIVE, keep-alive cnt:   1, click cnt:   0
+[    203][    83] ID(hex):   2, evt: ONRELEASE, keep-alive cnt:   1, click cnt:   0
+[    403][   200] ID(hex):   2, evt:   ONCLICK, keep-alive cnt:   1, click cnt:   1
+Testing test_sequence_keepalive_with_click ................................. pass
+[     20][    20] ID(hex):   2, evt:   ONPRESS, keep-alive cnt:   1, click cnt:   0
+[    120][   100] ID(hex):   2, evt: KEEPALIVE, keep-alive cnt:   1, click cnt:   0
+[    220][   100] ID(hex):   2, evt: KEEPALIVE, keep-alive cnt:   2, click cnt:   0
+[    304][    84] ID(hex):   2, evt: ONRELEASE, keep-alive cnt:   2, click cnt:   0
+[    504][   200] ID(hex):   2, evt:   ONCLICK, keep-alive cnt:   2, click cnt:   1
+Testing test_sequence_keepalive_with_click_double .......................... pass
+[     20][    20] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    102][    82] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    223][   121] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    304][    81] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    425][   121] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   2
+[    506][    81] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   2
+[    506][     0] ID(hex):   3, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   3
+Testing test_sequence_max_click_3 .......................................... pass
+[     20][    20] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    102][    82] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    223][   121] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   1
+[    304][    81] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   1
+[    425][   121] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   2
+[    506][    81] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   2
+[    506][     0] ID(hex):   3, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   3
+[    627][   121] ID(hex):   3, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    708][    81] ID(hex):   3, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    908][   200] ID(hex):   3, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_max_click_3_over ..................................... pass
+[     20][    20] ID(hex):   4, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    102][    82] ID(hex):   4, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    123][    21] ID(hex):   4, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+[    123][     0] ID(hex):   4, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    204][    81] ID(hex):   4, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    225][    21] ID(hex):   4, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+[    225][     0] ID(hex):   4, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    306][    81] ID(hex):   4, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    307][     1] ID(hex):   4, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_click_multi_max_0 .................................... pass
+[     20][    20] ID(hex):   5, evt:   ONPRESS, keep-alive cnt:   0, click cnt:   0
+[    303][   283] ID(hex):   5, evt: ONRELEASE, keep-alive cnt:   0, click cnt:   0
+[    503][   200] ID(hex):   5, evt:   ONCLICK, keep-alive cnt:   0, click cnt:   1
+Testing test_sequence_keep_alive_0 ......................................... pass
 Executing 'run: all' complete!
 ```
 
-可以看到，2个task同时支持消息处理，当有Save的场景会pending消息，先执行另外一个task，task执行完所有消息后，heap保持不变。
+当然可以用windows的按键进行交互测试，详见`example_user.c`的处理，`main.c`选择调用`example_user()`。
 
 
 
