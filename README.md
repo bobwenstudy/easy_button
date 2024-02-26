@@ -97,7 +97,7 @@ typedef enum
 - **README.md**：说明文档
 
 ```shell
-bare_task_msg
+easy_button
  ├── ebtn
  │   ├── bit_array.h
  │   ├── ebtn.c
