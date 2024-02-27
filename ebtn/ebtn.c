@@ -62,13 +62,13 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
                     btn->click_cnt = 0;
                 }
 
-                /* Start with new on-press */
-                btn->flags |= EBTN_FLAG_ONPRESS_SENT;
-                ebtobj->evt_fn(btn, EBTN_EVT_ONPRESS);
-
                 /* Set keep alive time */
                 btn->keepalive_last_time = mstime;
                 btn->keepalive_cnt = 0;
+
+                /* Start with new on-press */
+                btn->flags |= EBTN_FLAG_ONPRESS_SENT;
+                ebtobj->evt_fn(btn, EBTN_EVT_ONPRESS);
 
                 btn->time_change = mstime; /* Button state has now changed */
             }

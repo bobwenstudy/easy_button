@@ -215,7 +215,7 @@ while (1)
 }
 ```
 
-具体可以参考`example_win32.c`和`test.c`的实现。
+具体可以参考`example_user.c`和`example_test.c`的实现。
 
 
 
@@ -659,7 +659,7 @@ int ebtn_is_in_process(void);
 
 而当按下保持时间大于`time_click_pressed_max`时，就不会上报`ONCLICK`事件，如下图所示。
 
-![image-20240223145802203](https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20240223145802203.png)
+![image-20240227112945641](https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20240227112945641.png)
 
 
 
