@@ -1,8 +1,8 @@
 #include <string.h>
 #include "ebtn.h"
 
-#define EBTN_FLAG_ONPRESS_SENT ((uint16_t)0x0001) /*!< Flag indicates that on-press event has been sent */
-#define EBTN_FLAG_IN_PROCESS   ((uint16_t)0x0002) /*!< Flag indicates that button in process */
+#define EBTN_FLAG_ONPRESS_SENT ((uint8_t)0x01) /*!< Flag indicates that on-press event has been sent */
+#define EBTN_FLAG_IN_PROCESS   ((uint8_t)0x02) /*!< Flag indicates that button in process */
 
 /* Default button group instance */
 static ebtn_t ebtn_default;
@@ -58,7 +58,10 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
                  */
                 if ((btn->click_cnt > 0) && (ebtn_timer_sub(mstime, btn->click_last_time) >= btn->param->time_click_multi_max))
                 {
-                    ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                    if (btn->event_mask & EBTN_EVT_MASK_ONCLICK)
+                    {
+                        ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                    }
                     btn->click_cnt = 0;
                 }
 
@@ -68,7 +71,10 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
 
                 /* Start with new on-press */
                 btn->flags |= EBTN_FLAG_ONPRESS_SENT;
-                ebtobj->evt_fn(btn, EBTN_EVT_ONPRESS);
+                if (btn->event_mask & EBTN_EVT_MASK_ONPRESS)
+                {
+                    ebtobj->evt_fn(btn, EBTN_EVT_ONPRESS);
+                }
 
                 btn->time_change = mstime; /* Button state has now changed */
             }
@@ -85,13 +91,19 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
             {
                 btn->keepalive_last_time += btn->param->time_keepalive_period;
                 ++btn->keepalive_cnt;
-                ebtobj->evt_fn(btn, EBTN_EVT_KEEPALIVE);
+                if (btn->event_mask & EBTN_EVT_MASK_KEEPALIVE)
+                {
+                    ebtobj->evt_fn(btn, EBTN_EVT_KEEPALIVE);
+                }
             }
 
             // Scene1: multi click end with a long press, need send onclick event.
             if ((btn->click_cnt > 0) && (ebtn_timer_sub(mstime, btn->time_change) > btn->param->time_click_pressed_max))
             {
-                ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                if (btn->event_mask & EBTN_EVT_MASK_ONCLICK)
+                {
+                    ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                }
 
                 btn->click_cnt = 0;
             }
@@ -117,7 +129,10 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
             {
                 /* Handle on-release event */
                 btn->flags &= ~EBTN_FLAG_ONPRESS_SENT;
-                ebtobj->evt_fn(btn, EBTN_EVT_ONRELEASE);
+                if (btn->event_mask & EBTN_EVT_MASK_ONRELEASE)
+                {
+                    ebtobj->evt_fn(btn, EBTN_EVT_ONRELEASE);
+                }
 
                 /* Check time validity for click event */
                 if (ebtn_timer_sub(mstime, btn->time_change) >= btn->param->time_click_pressed_min &&
@@ -133,7 +148,10 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
                     // positive, send event to user.
                     if ((btn->click_cnt > 0) && (ebtn_timer_sub(mstime, btn->time_change) < btn->param->time_click_pressed_min))
                     {
-                        ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                        if (btn->event_mask & EBTN_EVT_MASK_ONCLICK)
+                        {
+                            ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                        }
                     }
                     /*
                      * There was an on-release event, but timing
@@ -148,7 +166,10 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
                 // maximum number of consecutive clicks has been reached.
                 if ((btn->click_cnt > 0) && (btn->click_cnt == btn->param->max_consecutive))
                 {
-                    ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                    if (btn->event_mask & EBTN_EVT_MASK_ONCLICK)
+                    {
+                        ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                    }
                     btn->click_cnt = 0;
                 }
 
@@ -169,7 +190,10 @@ static void prv_process_btn(ebtn_btn_t *btn, uint8_t old_state, uint8_t new_stat
             {
                 if (ebtn_timer_sub(mstime, btn->click_last_time) >= btn->param->time_click_multi_max)
                 {
-                    ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                    if (btn->event_mask & EBTN_EVT_MASK_ONCLICK)
+                    {
+                        ebtobj->evt_fn(btn, EBTN_EVT_ONCLICK);
+                    }
                     btn->click_cnt = 0;
                 }
             }

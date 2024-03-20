@@ -41,6 +41,13 @@ typedef enum
     EBTN_EVT_KEEPALIVE,      /*!< Keep alive event - sent periodically when button is active */
 } ebtn_evt_t;
 
+#define EBTN_EVT_MASK_ONPRESS   (1 << EBTN_EVT_ONPRESS)
+#define EBTN_EVT_MASK_ONRELEASE (1 << EBTN_EVT_ONRELEASE)
+#define EBTN_EVT_MASK_ONCLICK   (1 << EBTN_EVT_ONCLICK)
+#define EBTN_EVT_MASK_KEEPALIVE (1 << EBTN_EVT_KEEPALIVE)
+
+#define EBTN_EVT_MASK_ALL (EBTN_EVT_MASK_ONPRESS | EBTN_EVT_MASK_ONRELEASE | EBTN_EVT_MASK_ONCLICK | EBTN_EVT_MASK_KEEPALIVE)
+
 /**
  * @brief  Returns the difference between two absolute times: time1-time2.
  * @param[in]  time1: Absolute time expressed in internal time units.
@@ -178,14 +185,21 @@ typedef struct ebtn_btn_param
         .max_consecutive = _max_consecutive                                                                                                                    \
     }
 
-#define EBTN_BUTTON_INIT(_key_id, _param)                                                                                                                      \
+#define EBTN_BUTTON_INIT_RAW(_key_id, _param, _mask)                                                                                                           \
     {                                                                                                                                                          \
-        .key_id = _key_id, .param = _param,                                                                                                                    \
+        .key_id = _key_id, .param = _param, .event_mask = _mask,                                                                                               \
     }
+
+#define EBTN_BUTTON_INIT(_key_id, _param) EBTN_BUTTON_INIT_RAW(_key_id, _param, EBTN_EVT_MASK_ALL)
 
 #define EBTN_BUTTON_DYN_INIT(_key_id, _param)                                                                                                                  \
     {                                                                                                                                                          \
         .next = NULL, .btn = EBTN_BUTTON_INIT(_key_id, _param),                                                                                                \
+    }
+
+#define EBTN_BUTTON_COMBO_INIT_RAW(_key_id, _param, _mask)                                                                                                     \
+    {                                                                                                                                                          \
+        .comb_key = {0}, .btn = EBTN_BUTTON_INIT_RAW(_key_id, _param, _mask),                                                                                  \
     }
 
 #define EBTN_BUTTON_COMBO_INIT(_key_id, _param)                                                                                                                \
@@ -205,8 +219,10 @@ typedef struct ebtn_btn_param
  */
 typedef struct ebtn_btn
 {
-    uint16_t key_id;               /*!< User defined custom argument for callback function purpose */
-    uint16_t flags;                /*!< Private button flags management */
+    uint16_t key_id;    /*!< User defined custom argument for callback function purpose */
+    uint8_t flags;      /*!< Private button flags management */
+    uint8_t event_mask; /*!< Private button event mask management */
+
     ebtn_time_t time_change;       /*!< Time in ms when button state got changed last time after valid
                                    debounce */
     ebtn_time_t time_state_change; /*!< Time in ms when button state got changed last time */
@@ -218,7 +234,7 @@ typedef struct ebtn_btn
     uint16_t keepalive_cnt; /*!< Number of keep alive events sent after successful on-press
                             detection. Value is reset after on-release */
     uint16_t click_cnt;     /*!< Number of consecutive clicks detected, respecting maximum timeout
-                        between     clicks */
+                        between clicks */
 
     const ebtn_btn_param_t *param;
 } ebtn_btn_t;
