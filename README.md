@@ -1,6 +1,7 @@
 # 简介
 
 在嵌入式裸机开发中，经常有按键的管理需求，GitHub上已经有蛮多成熟的按键驱动了，但是由于这样那样的问题，最终还是自己实现了一套。本项目地址：[bobwenstudy/easy_button (github.com)](https://github.com/bobwenstudy/easy_button)。
+一个网友的分享，MCU应用实践可以参考：[easy_button-Application](https://github.com/Sighthesia/easy_button-Application/tree/main)
 
 项目开发过程中参考了如下几个项目[murphyzhao/FlexibleButton: 灵活的按键处理库（Flexible Button）| 按键驱动 | 支持单击、双击、连击、长按、自动消抖 | 灵活适配中断和低功耗 | 按需实现组合按键 (github.com)](https://github.com/murphyzhao/FlexibleButton)，[0x1abin/MultiButton: Button driver for embedded system (github.com)](https://github.com/0x1abin/MultiButton)和[MaJerle/lwbtn: Lightweight button handler for embedded systems (github.com)](https://github.com/MaJerle/lwbtn)。
 
