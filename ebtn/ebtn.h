@@ -16,9 +16,11 @@ extern "C" {
 #ifdef EBTN_CONFIG_TIMER_16
 typedef uint16_t ebtn_time_t;
 typedef int16_t ebtn_time_sign_t;
+#define MAX_TIME_VALUE (0xffff)
 #else
 typedef uint32_t ebtn_time_t;
 typedef int32_t ebtn_time_sign_t;
+#define MAX_TIME_VALUE (0xffffffff)
 #endif
 
 /* Forward declarations */
@@ -56,7 +58,15 @@ typedef enum
  */
 static inline ebtn_time_sign_t ebtn_timer_sub(ebtn_time_t time1, ebtn_time_t time2)
 {
-    return time1 - time2;
+    if(time1 >= time2)
+    {
+        return time1 - time2;
+    }
+    else
+    {
+        return MAX_TIME_VALUE - time2 + time1;
+    }
+    
 }
 
 // test time overflow error
