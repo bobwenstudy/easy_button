@@ -1,0 +1,27 @@
+#ignore .metadata
+.metadata
+#ignore obj and lib file
+*.[oa]
+
+#ignore temp files
+*.swp
+*.temp
+*.tmp
+
+#python
+*.pyc
+
+
+#ignore android project files
+*.properties
+build.xml
+proguard-project.txt
+
+#ignore android building directory
+/obj/
+/gen/
+/bin/
+/build*/
+*/build/
+/install/
+
